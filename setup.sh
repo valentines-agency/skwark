@@ -73,8 +73,8 @@ echo -e "${GREEN}✓${NC} Monorepo bootstrapped successfully"
 echo ""
 
 # Step 2: Generate platform files
-echo "📱 Step 2: Generate platform files"
-echo "This will create Android, iOS, and Web platform files..."
+echo "📱 Step 2: Generate mobile platform files"
+echo "This will create Android and iOS platform files..."
 echo ""
 
 cd apps/skwark
@@ -88,16 +88,16 @@ if [ -d "android" ] && [ -d "ios" ]; then
         echo "Skipping platform generation"
         cd ../..
     else
-        flutter create --platforms=android,ios,web .
+        flutter create --platforms=android,ios .
         cd ../..
         echo ""
-        echo -e "${GREEN}✓${NC} Platform files regenerated"
+        echo -e "${GREEN}✓${NC} Mobile platform files regenerated"
     fi
 else
-    flutter create --platforms=android,ios,web .
+    flutter create --platforms=android,ios .
     cd ../..
     echo ""
-    echo -e "${GREEN}✓${NC} Platform files generated"
+    echo -e "${GREEN}✓${NC} Mobile platform files generated"
 fi
 
 echo ""

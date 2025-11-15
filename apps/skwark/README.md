@@ -1,10 +1,10 @@
-# Skwark Flutter App
+# Skwark Mobile App
 
-This is the main Skwark AR Aviation Spotting application.
+This is the main Skwark AR Aviation Spotting mobile application for Android and iOS.
 
 ## Setup Instructions
 
-Since this app was restructured as part of a monorepo, you'll need to generate the platform-specific files (Android, iOS, etc.) using Flutter.
+Since this app was restructured as part of a monorepo, you'll need to generate the mobile platform-specific files (Android and iOS) using Flutter.
 
 ### Initial Platform Setup
 
@@ -14,16 +14,12 @@ Run this command from the **monorepo root** directory:
 # From the root of the repository
 cd apps/skwark
 
-# Generate platform files (Android, iOS, web, etc.)
-flutter create --platforms=android,ios,web,linux,macos,windows .
+# Generate mobile platform files (Android and iOS only)
+flutter create --platforms=android,ios .
 
 # This will create:
-# - android/      (Android Studio project)
-# - ios/          (Xcode project)
-# - web/          (Web platform files)
-# - linux/        (Linux platform files)
-# - macos/        (macOS platform files)
-# - windows/      (Windows platform files)
+# - android/      (Android Studio project for phones & tablets)
+# - ios/          (Xcode project for iPhone & iPad)
 ```
 
 **Important:** The `flutter create .` command will NOT overwrite your existing `lib/`, `pubspec.yaml`, or `analysis_options.yaml` files. It only adds missing platform directories.

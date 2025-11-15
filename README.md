@@ -1,8 +1,10 @@
 # Skwark ✈️
 
-**The augmented reality plane spotter.**
+**The augmented reality plane spotter for mobile devices.**
 
-A sleek, modern Flutter AR application that transforms your smartphone into an intelligent aviation spotter. Point your phone at the sky and instantly see flight paths anchored to real aircraft, rendered directly in your camera view with smooth, stable AR tracking.
+A sleek, modern Flutter AR mobile application that transforms your smartphone or tablet into an intelligent aviation spotter. Point your phone at the sky and instantly see flight paths anchored to real aircraft, rendered directly in your camera view with smooth, stable AR tracking.
+
+**Platforms:** Android phones & tablets | iPhone & iPad
 
 ---
 
@@ -113,10 +115,10 @@ chmod +x setup.sh
    melos bootstrap
    ```
 
-4. **Generate platform files** (Android/iOS projects):
+4. **Generate mobile platform files** (Android/iOS):
    ```bash
    cd apps/skwark
-   flutter create --platforms=android,ios,web .
+   flutter create --platforms=android,ios .
    cd ../..
    ```
 
