@@ -4,6 +4,12 @@
 
 A sleek, modern Flutter AR application that transforms your smartphone into an intelligent aviation spotter. Point your phone at the sky and instantly see flight paths anchored to real aircraft, rendered directly in your camera view with smooth, stable AR tracking.
 
+---
+
+**📚 Documentation:** [Setup](SETUP.md) • [Build](BUILD.md) • [Testing](TESTING.md) • [Checklist](apps/skwark/CHECKLIST.md)
+
+---
+
 ## Features
 
 - **On-Device AR Processing**: All AR rendering, tracking, and stabilization performed locally using ARKit (iOS) and ARCore (Android)
@@ -27,35 +33,47 @@ A sleek, modern Flutter AR application that transforms your smartphone into an i
 
 ## Project Structure
 
+This project is organized as a **monorepo** using [Melos](https://melos.invertase.dev/) for efficient package management and streamlined development workflows.
+
 ```
-lib/
-├── core/
-│   ├── theme/
-│   │   └── app_theme.dart         # Material 3 theme with color palette
-│   ├── utils/
-│   └── constants/
-├── features/
-│   ├── onboarding/
-│   │   └── screens/
-│   │       └── permissions_gate_screen.dart  # Permission request screen
-│   ├── ar_view/
-│   │   ├── screens/
-│   │   │   └── ar_view_screen.dart           # Main AR camera view
-│   │   └── widgets/
-│   │       ├── flight_path_painter.dart      # Custom painter for AR paths
-│   │       └── flight_list_bottom_sheet.dart # Flight details sheet
-│   └── plane_profile/
-│       └── screens/
-│           └── plane_profile_screen.dart     # Detailed aircraft profile
-├── shared/
-│   ├── models/
-│   │   ├── flight.dart            # Flight data model
-│   │   └── aircraft.dart          # Aircraft specifications model
-│   ├── services/
-│   │   ├── flight_data_service.dart  # OpenSky API integration
-│   │   └── location_service.dart     # GPS and location handling
-│   └── widgets/
-└── main.dart                      # App entry point
+skwark/                            # Monorepo root
+├── apps/                          # Applications
+│   └── skwark/                    # Main Flutter app
+│       ├── lib/
+│       │   ├── core/
+│       │   │   ├── theme/
+│       │   │   │   └── app_theme.dart         # Material 3 theme
+│       │   │   ├── utils/
+│       │   │   └── constants/
+│       │   ├── features/
+│       │   │   ├── onboarding/
+│       │   │   │   └── screens/
+│       │   │   │       └── permissions_gate_screen.dart
+│       │   │   ├── ar_view/
+│       │   │   │   ├── screens/
+│       │   │   │   │   └── ar_view_screen.dart
+│       │   │   │   └── widgets/
+│       │   │   │       ├── flight_path_painter.dart
+│       │   │   │       └── flight_list_bottom_sheet.dart
+│       │   │   └── plane_profile/
+│       │   │       └── screens/
+│       │   │           └── plane_profile_screen.dart
+│       │   ├── shared/
+│       │   │   ├── models/
+│       │   │   │   ├── flight.dart            # Flight data model
+│       │   │   │   └── aircraft.dart          # Aircraft specs model
+│       │   │   ├── services/
+│       │   │   │   ├── flight_data_service.dart  # OpenSky API
+│       │   │   │   └── location_service.dart     # GPS handling
+│       │   │   └── widgets/
+│       │   └── main.dart                      # App entry point
+│       ├── pubspec.yaml           # App dependencies
+│       └── analysis_options.yaml  # Linting rules
+├── packages/                      # Shared packages (future)
+│   └── (shared libraries will go here)
+├── melos.yaml                     # Monorepo configuration
+├── pubspec.yaml                   # Workspace dependencies
+└── README.md                      # This file
 ```
 
 ## Getting Started
@@ -67,7 +85,17 @@ lib/
 - Physical device with camera (AR requires actual hardware)
 - Google Maps API key (for map features)
 
-### Installation
+### Quick Start
+
+**Automated Setup** (Recommended):
+```bash
+git clone https://github.com/valentines-agency/skwark.git
+cd skwark
+chmod +x setup.sh
+./setup.sh
+```
+
+**Manual Setup**:
 
 1. **Clone the repository**:
    ```bash
@@ -75,29 +103,29 @@ lib/
    cd skwark
    ```
 
-2. **Install dependencies**:
+2. **Install Melos** (monorepo management):
    ```bash
-   flutter pub get
+   dart pub global activate melos
    ```
 
-3. **Configure Google Maps** (optional for full functionality):
-
-   **Android**: Add your API key to `android/app/src/main/AndroidManifest.xml`:
-   ```xml
-   <meta-data
-       android:name="com.google.android.geo.API_KEY"
-       android:value="YOUR_API_KEY_HERE"/>
-   ```
-
-   **iOS**: Add your API key to `ios/Runner/AppDelegate.swift`:
-   ```swift
-   GMSServices.provideAPIKey("YOUR_API_KEY_HERE")
-   ```
-
-4. **Run on device** (camera required for AR):
+3. **Bootstrap the monorepo**:
    ```bash
-   flutter run
+   melos bootstrap
    ```
+
+4. **Generate platform files** (Android/iOS projects):
+   ```bash
+   cd apps/skwark
+   flutter create --platforms=android,ios,web .
+   cd ../..
+   ```
+
+5. **Run the app**:
+   ```bash
+   melos run run:app
+   ```
+
+For detailed setup instructions including API key configuration, Android Studio setup, and troubleshooting, see **[SETUP.md](SETUP.md)**.
 
 ## Usage
 
@@ -107,6 +135,53 @@ lib/
 4. **View Flight Paths**: Watch as paths are rendered in real-time
 5. **Tap to Explore**: Tap any plane or path to view details
 6. **Deep Dive**: Open full profile for comprehensive aircraft information
+
+## Monorepo Commands
+
+This project uses Melos for monorepo management. Here are the most useful commands:
+
+```bash
+# Bootstrap the monorepo (run after clone or when adding new packages)
+melos bootstrap
+
+# Run the main app
+melos run run:app
+
+# Build the app
+melos run build:app
+
+# Analyze all packages
+melos run analyze
+
+# Format all code
+melos run format
+
+# Run tests in all packages
+melos run test
+
+# Clean all packages
+melos run clean
+
+# Get dependencies for all packages
+melos run get
+
+# List all packages in the monorepo
+melos list
+
+# Execute a command in all packages
+melos exec -- <command>
+```
+
+### Working with Individual Packages
+
+You can also work with individual packages by navigating to their directory:
+
+```bash
+cd apps/skwark
+flutter run
+flutter test
+flutter build apk
+```
 
 ## Development Roadmap
 

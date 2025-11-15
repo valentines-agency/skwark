@@ -1,0 +1,59 @@
+name: Quick Check
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  quick-check:
+    name: Quick Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify build configuration
+        run: |
+          chmod +x verify_build_config.sh
+          ./verify_build_config.sh
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install Melos
+        run: dart pub global activate melos
+
+      - name: Bootstrap monorepo
+        run: melos bootstrap
+
+      - name: Generate platform files
+        working-directory: apps/skwark
+        run: flutter create --platforms=android .
+
+      - name: Analyze code
+        run: melos run analyze
+
+      - name: Check formatting
+        working-directory: apps/skwark
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Run tests
+        run: melos run test
+
+      - name: Build check (Android Debug)
+        working-directory: apps/skwark
+        run: flutter build apk --debug
+
+      - name: Report success
+        run: |
+          echo "✅ All quick checks passed!"
+          echo "✅ Code analysis: PASSED"
+          echo "✅ Formatting: PASSED"
+          echo "✅ Tests: PASSED"
+          echo "✅ Build: PASSED"
