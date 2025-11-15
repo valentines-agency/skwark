@@ -79,7 +79,17 @@ skwark/                            # Monorepo root
 - Physical device with camera (AR requires actual hardware)
 - Google Maps API key (for map features)
 
-### Installation
+### Quick Start
+
+**Automated Setup** (Recommended):
+```bash
+git clone https://github.com/valentines-agency/skwark.git
+cd skwark
+chmod +x setup.sh
+./setup.sh
+```
+
+**Manual Setup**:
 
 1. **Clone the repository**:
    ```bash
@@ -92,36 +102,24 @@ skwark/                            # Monorepo root
    dart pub global activate melos
    ```
 
-3. **Bootstrap the monorepo** (installs all dependencies):
+3. **Bootstrap the monorepo**:
    ```bash
    melos bootstrap
    ```
 
-   This command will:
-   - Link all packages together
-   - Run `flutter pub get` in all packages
-   - Generate IDE project files
-
-4. **Configure Google Maps** (optional for full functionality):
-
-   **Android**: Add your API key to `apps/skwark/android/app/src/main/AndroidManifest.xml`:
-   ```xml
-   <meta-data
-       android:name="com.google.android.geo.API_KEY"
-       android:value="YOUR_API_KEY_HERE"/>
+4. **Generate platform files** (Android/iOS projects):
+   ```bash
+   cd apps/skwark
+   flutter create --platforms=android,ios,web .
+   cd ../..
    ```
 
-   **iOS**: Add your API key to `apps/skwark/ios/Runner/AppDelegate.swift`:
-   ```swift
-   GMSServices.provideAPIKey("YOUR_API_KEY_HERE")
-   ```
-
-5. **Run on device** (camera required for AR):
+5. **Run the app**:
    ```bash
    melos run run:app
-   # Or navigate to the app directory:
-   cd apps/skwark && flutter run
    ```
+
+For detailed setup instructions including API key configuration, Android Studio setup, and troubleshooting, see **[SETUP.md](SETUP.md)**.
 
 ## Usage
 
