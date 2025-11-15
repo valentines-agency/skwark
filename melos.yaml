@@ -1,0 +1,67 @@
+name: skwark
+repository: https://github.com/valentines-agency/skwark
+
+packages:
+  - apps/**
+  - packages/**
+
+command:
+  bootstrap:
+    # Run pub get in all packages
+    runPubGetInParallel: true
+    # Generate IntelliJ/Android Studio project files
+    ide:
+      enabled: true
+      intellij: true
+
+  version:
+    # Only bump versions in apps/skwark for now
+    workspaceChangelog: true
+    linkToCommits: true
+
+scripts:
+  # Analyze all packages
+  analyze:
+    run: flutter analyze
+    description: Run flutter analyze in all packages
+
+  # Format all packages
+  format:
+    run: dart format .
+    description: Format all Dart code
+
+  # Run tests in all packages
+  test:
+    run: flutter test
+    description: Run tests in all packages
+    packageFilters:
+      dirExists: test
+
+  # Clean all packages
+  clean:
+    run: flutter clean
+    description: Clean all packages
+
+  # Get dependencies for all packages
+  get:
+    run: flutter pub get
+    description: Get dependencies for all packages
+
+  # Build the main app
+  build:app:
+    run: flutter build
+    description: Build the main skwark app
+    packageFilters:
+      scope: 'skwark'
+
+  # Run the main app
+  run:app:
+    run: flutter run
+    description: Run the main skwark app
+    packageFilters:
+      scope: 'skwark'
+
+ide:
+  # Enable IntelliJ support
+  intellij:
+    enabled: true

@@ -96,3 +96,8 @@ lib/generated_plugin_registrant.dart
 **/secrets.dart
 google-services.json
 GoogleService-Info.plist
+
+# Melos (monorepo management)
+.melos_tool/
+.melos/
+melos_*.yaml
