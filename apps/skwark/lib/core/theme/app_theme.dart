@@ -167,7 +167,7 @@ class AppTheme {
     ),
   );
 
-  static final CardTheme _cardTheme = CardTheme(
+  static final CardThemeData _cardTheme = CardThemeData(
     elevation: 2,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(16),
