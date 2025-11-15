@@ -4,6 +4,12 @@
 
 A sleek, modern Flutter AR application that transforms your smartphone into an intelligent aviation spotter. Point your phone at the sky and instantly see flight paths anchored to real aircraft, rendered directly in your camera view with smooth, stable AR tracking.
 
+---
+
+**📚 Documentation:** [Setup](SETUP.md) • [Build](BUILD.md) • [Testing](TESTING.md) • [Checklist](apps/skwark/CHECKLIST.md)
+
+---
+
 ## Features
 
 - **On-Device AR Processing**: All AR rendering, tracking, and stabilization performed locally using ARKit (iOS) and ARCore (Android)
