@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Local Build Test Script
-# Tests that the app builds successfully on all platforms
+# Local Mobile Build Test Script
+# Tests that the mobile app builds successfully for Android and iOS
 
 set -e
 
@@ -12,8 +12,8 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo "🔨 Skwark Build Test"
-echo "===================="
+echo "📱 Skwark Mobile Build Test"
+echo "============================"
 echo ""
 
 # Check if Flutter is installed
@@ -78,24 +78,21 @@ case $PLATFORM in
     ios)
         PLATFORMS="ios"
         ;;
-    web)
-        PLATFORMS="web"
-        ;;
     all)
-        PLATFORMS="android,ios,web"
+        PLATFORMS="android,ios"
         ;;
     *)
         echo -e "${RED}❌ Invalid platform: $PLATFORM${NC}"
-        echo "Valid options: android, ios, web, all"
+        echo "Valid options: android, ios, all"
         exit 1
         ;;
 esac
 
-if [ ! -d "android" ] || [ ! -d "ios" ] || [ ! -d "web" ]; then
-    echo "Generating platform files for: $PLATFORMS"
+if [ ! -d "android" ] || [ ! -d "ios" ]; then
+    echo "Generating mobile platform files for: $PLATFORMS"
     flutter create --platforms=$PLATFORMS .
 else
-    echo -e "${GREEN}✓${NC} Platform files already exist"
+    echo -e "${GREEN}✓${NC} Mobile platform files already exist"
 fi
 
 echo ""
@@ -173,24 +170,6 @@ build_ios() {
     echo -e "${GREEN}✅ iOS built successfully${NC}"
 }
 
-build_web() {
-    echo ""
-    echo "🌐 Building for Web..."
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-    flutter build web $BUILD_FLAGS || {
-        echo -e "${RED}❌ Web build failed${NC}"
-        return 1
-    }
-
-    if [ -d "build/web" ]; then
-        WEB_SIZE=$(du -sh build/web | cut -f1)
-        echo -e "${GREEN}✅ Web built successfully${NC}"
-        echo "   Path: build/web/"
-        echo "   Size: $WEB_SIZE"
-    fi
-}
-
 # Build based on platform selection
 FAILED=0
 
@@ -201,13 +180,9 @@ case $PLATFORM in
     ios)
         build_ios || FAILED=1
         ;;
-    web)
-        build_web || FAILED=1
-        ;;
     all)
         build_android || FAILED=1
         build_ios || FAILED=1
-        build_web || FAILED=1
         ;;
 esac
 
@@ -218,9 +193,9 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 
 if [ $FAILED -eq 0 ]; then
-    echo -e "${GREEN}🎉 BUILD SUCCESSFUL!${NC}"
+    echo -e "${GREEN}🎉 MOBILE BUILD SUCCESSFUL!${NC}"
     echo ""
-    echo "All builds completed successfully."
+    echo "All mobile builds completed successfully."
     echo ""
     echo "Build artifacts:"
 
@@ -233,16 +208,12 @@ if [ $FAILED -eq 0 ]; then
         echo "  🍎 iOS: apps/skwark/build/ios/"
     fi
 
-    if [ -d "apps/skwark/build/web" ]; then
-        echo "  🌐 Web: apps/skwark/build/web/"
-    fi
-
     echo ""
     exit 0
 else
-    echo -e "${RED}❌ BUILD FAILED${NC}"
+    echo -e "${RED}❌ MOBILE BUILD FAILED${NC}"
     echo ""
-    echo "Some builds failed. Check the error messages above."
+    echo "Some mobile builds failed. Check the error messages above."
     echo ""
     exit 1
 fi

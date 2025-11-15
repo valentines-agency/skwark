@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Skwark Platform Setup Script
-# This script generates platform-specific files for Android, iOS, and other platforms
+# Skwark Mobile Platform Setup Script
+# This script generates platform-specific files for Android and iOS mobile devices
 
 set -e
 
-echo "🚀 Skwark Platform Setup"
-echo "========================"
+echo "📱 Skwark Mobile Platform Setup"
+echo "================================"
 echo ""
 
 # Check if Flutter is installed
@@ -39,15 +39,11 @@ echo "✓ Correct directory detected"
 echo ""
 
 # Generate platform files
-echo "📱 Generating platform files..."
+echo "📱 Generating mobile platform files..."
 echo ""
 echo "This will create:"
-echo "  - android/    (Android Studio project)"
-echo "  - ios/        (Xcode project)"
-echo "  - web/        (Web platform)"
-echo "  - linux/      (Linux platform)"
-echo "  - macos/      (macOS platform)"
-echo "  - windows/    (Windows platform)"
+echo "  - android/    (Android phone & tablet support)"
+echo "  - ios/        (iPhone & iPad support)"
 echo ""
 
 read -p "Continue? (y/n) " -n 1 -r
@@ -58,7 +54,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     exit 0
 fi
 
-flutter create --platforms=android,ios,web,linux,macos,windows .
+flutter create --platforms=android,ios .
 
 echo ""
 echo "✅ Platform files generated successfully!"
